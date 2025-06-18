@@ -3,8 +3,12 @@ import torch
 from typing import Optional
 
 class TextSummarizer:
-    def __init__(self):
-        self.model_name = "sshleifer/distilbart-cnn-12-6"
+    model_name = "sshleifer/distilbart-cnn-12-6"
+
+    def __init__(self, model_name: Optional[str] = None):
+        if model_name:
+            self.model_name = model_name
+
         try:
             self.summarizer = pipeline("summarization", model=self.model_name)
         except Exception as e:
