@@ -1,12 +1,16 @@
 import streamlit as st
 import requests
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 def main():
     st.title("AI Text Summarizer")
     st.write("Enter your text below to get a summary.")
 
+    API_BASE_URL = os.getenv("API_BASE_URL", "http://localhost:5000")
     text = st.text_area("Text to summarize:", height=200)
-
     max_length = st.slider("Maximum length", 50, 500, 130)
     min_length = st.slider("Minimum length", 10, 100, 30)
 
@@ -18,7 +22,7 @@ def main():
         with st.spinner("Generating summary..."):
             try:
                 response = requests.post(
-                    "http://localhost:5000/summarize",
+                    f"{API_BASE_URL}/summarize",
                     json={
                         "text": text,
                         "max_length": max_length,
@@ -30,7 +34,7 @@ def main():
                     st.success("Summary generated!")
                     st.write(response.json()["summary"])
                 else:
-                    st.error(f"Error: {response.json()["detail"]}")
+                    st.error(f"Error: {response.json()['detail']}")
             except Exception as e:
                 st.error(f"Error connecting to the API: {e}")
                 return

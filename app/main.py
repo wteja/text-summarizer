@@ -2,8 +2,17 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from app.services.summarizer import TextSummarizer
 from app.utils.text_cleaner import TextCleaner
+import os
+from dotenv import load_dotenv
 
-app = FastAPI(title="Text Summarizer API")
+load_dotenv()
+
+app = FastAPI(
+    title="Text Summarizer API",
+    description="API for text summarization using DistilBART model",
+    version="1.0.0"
+)
+
 summarizer = TextSummarizer()
 cleaner = TextCleaner()
 
@@ -24,7 +33,10 @@ async def summarize_text(request: SummarizeRequest):
             request.max_length,
             request.min_length
         )
-
         return {"summary": summary}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/health")
+async def health_check():
+    return {"status": "healthy", "version": "1.0.0"}
