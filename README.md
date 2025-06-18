@@ -159,3 +159,64 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Add caching for improved performance
 - Implement user authentication
 - Add summary quality metrics
+
+## Docker Deployment
+
+You can run the application using Docker for a containerized deployment.
+
+### Building the Docker Image
+
+Build the Docker image using the following command:
+
+```bash
+docker build -t text-summarizer .
+```
+
+### Running the Container
+
+Run the Docker container with the following command:
+
+```bash
+docker run -d -p 5000:5000 --name text-summarizer-app text-summarizer
+```
+
+This will:
+- Start the container in detached mode (-d)
+- Map port 5000 from the container to port 5000 on your host machine
+- Name the container "text-summarizer-app"
+
+### Accessing the Application
+
+Once the container is running, you can access:
+- The API at `http://localhost:5000`
+- API documentation at `http://localhost:5000/docs`
+- Health check endpoint at `http://localhost:5000/health`
+
+### Docker Commands Reference
+
+Stop the container:
+```bash
+docker stop text-summarizer-app
+```
+
+Remove the container:
+```bash
+docker rm text-summarizer-app
+```
+
+View container logs:
+```bash
+docker logs text-summarizer-app
+```
+
+### Environment Variables
+
+You can override the default environment variables when running the container:
+
+```bash
+docker run -d -p 5000:5000 \
+  -e API_HOST=0.0.0.0 \
+  -e API_PORT=5000 \
+  -e DEBUG=False \
+  --name text-summarizer-app text-summarizer
+```
