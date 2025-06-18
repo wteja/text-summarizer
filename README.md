@@ -2,6 +2,12 @@
 
 A modern text summarization application built with FastAPI and Streamlit, powered by the DistilBART model. This application provides both a REST API and a user-friendly web interface for generating concise summaries of longer texts.
 
+![AI Text Summarizer Interface](screenshot.png)
+
+*Text Summarizer web interface powered by Streamlit*
+
+
+
 ## Features
 
 - 🚀 FastAPI backend for efficient API processing
